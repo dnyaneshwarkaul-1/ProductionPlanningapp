@@ -1,0 +1,33 @@
+How to use the files:
+                                        *************************************
+
+######Required Python Packages#######
+
+i.  numpy                                                        important
+ii. pandas                                                       important
+iii.re      ----->Regular Expression                             important
+iv. streamlit----> For visualization in web page                 important
+v.  pulp    -----> Mathematical Optimizer                        important
+vi. ipywidgets                                                   important
+vii.PIL                                                          important
+viii. matplotlib -----> Package for Visualization in python      important
+ix.  os                                                          important
+      
+    How to Install------> In terminals use *pip install package_name* command
+                         Ex:  pip install streamlit
+
+                                        *************************************
+
+1.Make a folder named Streamlit_FMCG in downloads folder and keep these Required files in the newly created folder(Streamlit_FMCG).
+
+2.Required files:
+   a)*Run_file_streamlit_Pulp.py* or *Run_file_gurobi.py*  python file 
+   b) *Oreo_data*     input data file
+   c) *logo* image file 
+
+3.Open *Run_file_streamlit_Pulp.py*  using spyder python working software or any other python softwares supporting .py files
+
+4.Run the file and then run *streamlit run C:/Users/gururaj.kunagi/Downloads/Streamlit_FMCG/Run_file_streamlit_Pulp.py*
+   line in python(.py) supporting  command prompt
+
+5.Look into the screen shot guide image for streamlit running in spyder

@@ -1,0 +1,1478 @@
+
+PULSE PHASE 2 PROJECT
+Business Requirement Document (BRD)
+
+
+
+
+
+
+
+MARCH 11, 2026
+
+
+
+
+
+
+
+1.Executive Summary	2
+2. Business Objectives	3
+2.1 Overfill Optimization	3
+2.2 Gap Cover Intelligent Insights	3
+Performance Gap Types	4
+Financial Impact Calculation	4
+Purpose	5
+Phase 2 Scope Boundaries	6
+In Scope	6
+Out of Scope (Future Phase)	6
+3.1 Modules	6
+3.2 Data Domains	7
+3.3.1 Overfill Optimization – Phase 2 Scope	7
+Standard Analytical Grain	7
+Out of Scope (Future Phase)	8
+4. AS-IS Challenges Driving Phase 2	8
+4.1 Overfill Challenges	8
+4.2 NPL Challenges	8
+4.3 Sequencing Challenges	9
+5.	To-Be Vision for Phase 2	9
+Pulse Phase 2 delivers:	9
+6. MODULE 1 – Overfill Optimization Requirements	10
+6.2 Key Overfill Formulas	10
+6.2.2 Specific Gravity Adjustment	11
+Convert Target Volume to Target Weight	11
+Calculate Overfill in Weight	11
+6.2.3 Statistical Control	11
+6.3 Required Data	12
+6.4 MODULE 2 – GAP Cover Intelligence Insights Requirements	12
+Functional Requirements (FR-GAP)	12
+FR-GAP-01	12
+FR-GAP-02	13
+FR-GAP-03	13
+FR-GAP-04	13
+FR-GAP-05	13
+FR-GAP-06	13
+FR-GAP-07	14
+Portfolio Mix Optimization	14
+Watchouts & Risk Alerts	14
+Acceptance Criteria	14
+Expected Business Outcomes	15
+6.5 Functional Requirements (FR-OFF)	15
+7. MODULE 2 – Predictive NPL Performance Requirements	16
+Phase 2 Scope Boundaries	17
+In Scope	17
+Out of Scope (Future Phase)	17
+7.2 Inputs Required	17
+7.3 Functional Requirements (FR-NPL)	18
+FR-NPL-05 – Integration with Pack Assist	19
+Acceptance Criteria	19
+Expected Business Outcomes	20
+8. MODULE 3 – Sequencing Optimization Requirements	20
+8.1 Purpose	20
+8.2 Inputs Required	20
+Changeover Intelligence	21
+Line Capability	21
+Order & Production Data	21
+Operational Constraints	21
+Performance Benchmarks	22
+Objective Function (Phase 2)	22
+8.3 Functional Requirements (FR-SEQ)	22
+Data Model Requirements	24
+FactChangeoverMatrix	24
+FactSequenceScenario	24
+Acceptance Criteria	24
+9. Data Requirements	25
+10. System Integration Requirements	25
+11. Other Functional Requirements	26
+13. Risks & Mitigations	27
+14. Expected Business Outcomes	27
+Some Noteworthy Flow Diagrams	29
+ARCHITECTURE - Theoretical	31
+1. Source Systems	31
+Appendix	33
+Acronym Definitions	33
+
+
+
+
+
+
+
+
+PULSE ANALYTICS – PHASE 2 BUSINESS REQUIREMENTS DOCUMENT (BRD)
+
+1.Executive Summary
+Pulse Phase 2 expands the Gold Standard benchmarking framework built in Phase 1 into a decision-intelligence platform enabling four high-value manufacturing capabilities:
+1.Overfill Optimization 
+2.Gap Cover-Intelligence Insights
+3.New Product Launch (NPL) Predictive Performance
+4.Dynamic Short-Term Scheduling (Sequencing)
+
+These capabilities unlock significant operational value by reducing material losses, improving throughput efficiency, enhancing planning accuracy for new products, and enabling smarter daily production decisions.
+
+Phase 2 is built on the enterprise data (EDL, RDL, SAP, PDS, TML, Pack Assist, LIMS, QA-(LIMS, Free Weigh, Veeva Quality One), OT) and extends the Gold Standard logic into predictive and prescriptive use cases.
+
+This BRD defines all functional, data, integration, and non-functional requirements that vendors must adhere to. It establishes clear feasibility boundaries and expectations to ensure realistic delivery.
+2. Business Objectives
+2.1 Overfill Optimization
+
+Reduce overfill giveaway through accurate/standardized measurement, identification of root-cause drivers, modeling of historical performance, and forecasting of overfill risks by SKU, line, shift, package, and component MASS. 
+SKU × Line × Shift × Day 
+The solution will quantify financial impact and provide advisory recommendations to reduce material giveaway while maintaining regulatory compliance and aesthetic standards.
+
+2.2 Gap Cover Intelligent Insights
+The Gap Cover Intelligent Insights module extends the Gold Standard framework established in Phase 1 by operationalizing continuous performance gap detection and prioritized improvement recommendations. 
+This module should identify the performance gaps between:
+Legacy SKUs vs Gold Standard SKUs
+Lines vs optimal asset performance
+Shifts/operators vs benchmark levels
+Actual vs theoretical performance (GS speed, scrap, labor, overfill)
+Enable ongoing optimization of manufacturing performance by:
+Detecting underperforming SKUs relative to Gold Standard
+Quantifying cost-of-gap at SKU × Line × Shift level
+Prioritizing opportunities by financial impact
+Providing short-term operational recommendations
+Identifying long-term structural improvement opportunities
+The system converts these gaps into quantified, actionable improvement opportunities tied directly to financial impact.
+Performance Gap Types
+The system must calculate the following gap categories:
+OEE Gap
+ GS_OEE – Actual_OEE
+Speed Gap
+  GS_Speed – Actual_Speed
+Scrap Gap
+  Actual_Scrap% – GS_Scrap%
+Overfill Gap
+ Actual_Overfill% – GS_Overfill_Target
+Labor Efficiency Gap
+  Actual_Labor_Hours – GS_Labor_Standard
+ Actual_Crew_Size – GS__Crew _Size_Recommend
+Financial Impact Calculation
+Each performance gap must be translated into financial value:(USD across all regions)
+OEE Gap → Throughput opportunity
+Scrap Gap → Scrap cost delta
+Overfill Gap → Giveaway cost
+Labor Gap → Excess labor cost
+Total Gap Cost per SKU =
+ (OEE loss impact + Scrap cost delta + Overfill cost delta + Labor delta)
+The system must rank SKUs by total financial gap impact.
+
+
+2.3 Predictive New Product Launch (NPL) Performance
+
+Model expected performance of new products (scrap %, line speed, OEE, overfill risk, changeover time) by comparing SKU attributes against historical launches.
+The goal is to:
+Improve vertical startup success 
+Predict operational risk before launch
+Recommend optimal line allocation
+Reduce post-launch stabilization time
+Align new SKUs to Gold Standard performance targets
+Predictions must include:
+Scrap %
+Line speed
+OEE
+Overfill risk
+Changeover time
+PO Size
+
+
+2.4 Dynamic Short-Term Scheduling
+
+Objective
+Enable optimized daily and shift-level production sequencing for Fill & Assembly lines to:
+Reduce changeover losses
+Maximize throughput
+Improve adherence to Gold Standard performance
+Increase asset utilization
+Provide quantified decision support to production planners
+The system will generate optimized sequence recommendations and simulate expected performance impact prior to execution.
+Purpose
+Develop a deterministic sequencing optimization engine that:
+Evaluates multiple SKU order permutations
+Minimizes total changeover time
+Maximizes expected throughput
+Aligns production performance with Gold Standard benchmarks
+Provides scenario comparison capability
+The engine will operate at a single-line level per shift/day for Phase 2.
+Phase 2 Scope Boundaries
+In Scope
+Deterministic optimization for a single line
+Shift-level and day-level planning horizons
+Static constraint-based modeling
+Advisory recommendations only
+Scenario simulation and comparison
+Out of Scope (Future Phase)
+Multi-plant optimization
+Real-time MES rescheduling
+Stochastic/probabilistic optimization
+Closed-loop auto-rescheduling
+Enterprise-wide production balancing
+
+
+
+3. In-Scope (Phase 2)
+3.1 Modules
+
+1. Overfill Optimization Module
+2. NPL Predictive Performance Module
+3. Sequencing Optimization Module
+4. Integration Enhancements (SAP, PDS, TML, Pack Assist, QA, LIMS, OT)
+5. Dashboard Expansion and optimization- Phase 1 (Scrap Analytics and Gold Standard Dashboards)
+3.2 Data Domains
+
+• Fill weights & Specific Gravity adjusted mass -*Not all sites have fill weight software*
+• Packaging attributes (PDS/RDL)
+• BOM, routing, component variability (SAP/EDL)
+• SAP production orders (AFKO, AFRU, AFVC, CRHD, AUFK, MSEG, RESB, MKPF, STPO…)
+• SAP- Scrap codes and material usage variance
+• TML cycle times, machine data – *Not all sites use TML*
+• MnR- PackAssist change parts & format data - *Mix of database and excel*
+• SAP- Costing tables (CKKO,KEKO, MBEW, etc.)
+• SAP - QA (QALS, QAVE, QAMV, QAES, etc.)
+• LIMS (raw material QC attributes)
+• SAP - Operator/shift/labor data
+3.3.1 Overfill Optimization – Phase 2 Scope
+In Scope
+Analytical and predictive insights (no direct machine control)
+Standardized calculation logic across all plants
+SG-adjusted mass normalization
+Predictive overfill risk model
+Financial quantification of giveaway
+Advisory prescriptive recommendations
+Standard Analytical Grain
+Official Phase 2 grain: SKU × Line × Shift × Day
+Batch-level modeling will only be implemented where:
+Batch-level SG exists
+Data completeness > 90%
+Batch-to-order reconciliation is validated
+Out of Scope (Future Phase)
+Direct PLC or filler integration
+Real-time automated parameter adjustment
+Reinforcement learning / self-adjusting control
+Closed-loop control systems
+Operational execution of recommendations remains with plant teams.
+
+4. AS-IS Challenges Driving Phase 2
+
+4.1 Overfill Challenges
+
+Current limitations include:
+High variability across lines, shifts, and operators
+Package/format-driven mass differences not modeled
+Specific Gravity (SG) variations inconsistently applied
+No standardized tolerance windows across plants
+Manual overfill measurement processes
+Scrap and mass variance not unified into one logic
+No predictive visibility into overfill risk
+Limited root-cause attribution (operator vs filler vs packaging vs formulation)
+These gaps result in significant giveaway exposure ($25–40M annually).
+
+4.2 NPL Challenges 
+
+Challenges with Vertical start up for NPL to meet Gold Standard:
+No structured benchmark for predicting NPL performance
+Packaging complexity not mapped to historical line capability
+BOM and changeover complexity not quantified
+No system to simulate expected through put, scrap, OEE, or overfill for upcoming launches
+
+
+4.3 Sequencing Challenges
+
+Manual scheduling based on heuristics
+No quantified view of changeover penalties
+No dynamic sequence based on resource capability 
+Lack of real-time link between line capability, SKU attributes, and GS benchmarks
+No simulation environment for “What if we change the sequence?”
+No linkage between sequencing and Gold Standard benchmarks
+Limited visibility into financial impact of sequence decisions
+
+These gaps justify the development of an advanced, analytics-driven Phase 2 solution.
+
+To-Be Vision for Phase 2 
+
+Pulse Phase 2 delivers:      
+
+
+5.1 A Predictive Cost-to-Serve Engine
+
+Models scrap, overfill, speed loss and labor inefficiency by SKU, package, and line.
+
+5.2 A NPL Performance Simulation Engine
+
+Predicts the manufacturing performance of any new product before launch.
+
+5.3 A Sequencing Optimization Engine
+
+Produces ranked sequence options to maximize throughput and minimize changeover loss.
+
+5.4 Unified Gold Standard Extensions
+
+All Phase 2 outputs align back to:
+• GS speed benchmarks
+• GS scrap benchmarks
+ • GS Labor Utilization
+ • GS OEE Performance
+
+6. MODULE 1 – Overfill Optimization Requirements                                                                                                                           6.1 Purpose
+
+Create a standardized, predictive overfill optimization solution that reduces giveaway, aligns fill performance to GS QPA benchmarks, and identifies operational, material, and equipment drivers.
+Develop a standardized overfill calculation and predictive risk solution that:
+Normalizes mass using SG
+Aligns fill performance to GS benchmarks
+Identifies operational and material drivers
+Quantifies financial giveaway
+Enables structured tolerance management
+6.2 Key Overfill Formulas
+
+6.2.1 Core Formulas
+ Overfill vs legal:  QPA – legal claim
+QPA - legal claim + 1 ml 
+
+Target Fill Volume =Claim volume + regulatory & aesthetic requirements = Lower spec limit (LSL) in PDS
+Target fill volume = LSL + 3 x variance of the filler
+Overfill Quantity = Actual Fill Quantity - claimed quantity (claim that is on the package x avg SG)
+1. Regulatory & aestheic requirements=LSL-Claim
+Filler variance =target – LSL Lower spec limit 
+Set-up = actual fill - target fill
+QPA variance = QPA - fill target x SG
+
+Overfill % = (Actual – Target) / Target × 100
+
+Giveaway Cost = Overfill Quantity × Material Unit Cost
+ 
+6.2.2 Specific Gravity Adjustment
+ 
+Convert Target Volume to Target Weight
+Target Fill Weight = Target Fill Volume × SG
+Calculate Overfill in Weight
+Overfill Weight = Actual Weight – Target Fill Weight
+Actual Fill Volume = Actual Weight ÷ SG
+Overfill Volume = Actual Fill Volume – Target Fill Volume
+Cost:
+ Overfill Weight = Overfill Volume × SG
+
+Adjusted Fill Weight = Actual Weight / SG
+Overfill (Adj) = Adjusted Fill Weight – Target Fill Weight
+  
+
+6.2.3 Statistical Control
+ 
+Control Limits =Target fill +/- 3 sigma give LCL & UCL
+
+Potential Capability Index (Cp) = 
+Actual Capability Index (Cpk)=  
+
+USL = Upper Specification Limit
+ LSL = Lower Specification Limit
+μ = Process mean
+σ = Process standard deviation
+6.3 Required Data
+
+• SAP (MSEG, AFKO, AFRU, AFVC) – actual fills, scrap variance, production qty
+• PDS – packaging material weight, tolerances
+• QA/LIMS – SG values, viscosity classes, Temperature where available
+• MnR /Pack Assist – change parts and format data
+• BOM/Routing
+• Costing (MBEW, KEKO)
+• TML – cycle times, downtime, line speed (not all plants use TML)
+6.4 MODULE 2 – GAP Cover Intelligence Insights Requirements
+Functional Requirements (FR-GAP)
+FR-GAP-01
+System must automatically identify Gold Standard SKUs per line using predefined criteria (top-performing SKU based on OEE, scrap, labor, and speed). Guard rails where the GS will be calculated at the 75th Percentile of qualified POs (minimum 12 POs by family). Guard rails used in Phase 1
+Guardrails:
+ 
+Scrap cost between $10 and $25,000
+Line speed between 5 and 150 UPM
+OEE between 10% and 95%
+Delivered units ≥ 10
+FR-GAP-02
+System must compute performance gaps at the following grain:
+SKU × Line × Shift × Month
+SKU × Line × Day (drill-down)
+FR-GAP-03
+System must dynamically segment portfolio into:
+Gold Standard SKUs
+Near-GS SKUs
+High-gap SKUs (GS – Legacy)
+Structural underperformers
+FR-GAP-04
+System must prioritize improvement actions by financial impact (Speed, OEE, Labor, SCRAP) for a given time period, Region, Plant, Resource, SKU
+FR-GAP-05
+System must provide short-term operational recommendations, including:
+Speed adjustment
+Operator training needs
+Setup parameter review
+Changeover sequencing adjustment
+FR-GAP-06
+System must identify structural improvement opportunities, including:
+Packaging dimension redesign
+BOM optimization
+Component standardization
+Asset reallocation to higher capability lines
+FR-GAP-07
+System must integrate with NPL and Sequencing modules to:
+Recommend optimal line assignment
+Suggest portfolio mix optimization
+Support asset utilization optimization
+Portfolio Mix Optimization
+The system must evaluate SKU-to-line allocation efficiency by:
+Comparing SKU performance across eligible lines
+Identifying SKUs running below potential on suboptimal assets
+Quantifying benefit of reassignment
+Output:
+Recommended line reallocation scenarios
+Expected throughput gain
+Expected scrap and overfill reduction
+Watchouts & Risk Alerts
+System must automatically flag:
+SKUs with persistent GS deviation > 10%
+Lines with chronic underperformance vs asset class
+Operators/shifts with high variance
+SKUs with structural packaging incompatibility
+Acceptance Criteria 
+AC-GAP-01
+ System must correctly identify Gold Standard SKUs consistent with Phase 1 logic.
+AC-GAP-02
+ Financial gap calculations must reconcile within ±2% of finance-validated cost baseline.
+AC-GAP-03
+ System must identify at least 80% of historical known improvement cases in back-testing.
+AC-GAP-04
+ Top 20% of identified SKUs must represent ≥ 70% of total calculated opportunity (Pareto validation).
+Expected Business Outcomes
+5 – 15% improvement in OEE through targeted gap closure
+Reduction in scrap and overfill through portfolio optimization
+Improved asset utilization across plants
+Quantified, prioritized improvement roadmap
+Transition from reactive troubleshooting to proactive optimization
+
+6.5 Functional Requirements (FR-OFF)
+
+FR-OFF-01
+
+System must compute overfill quantity and cost at Family X SKU (MASS)× Line × Shift level.
+System must compute overfill weight, %, and cost at SKU × Line × Shift × Day level.
+
+FR-OFF-02
+
+System must model SG variability per batch and adjust fill weight accordingly.
+
+FR-OFF-03
+
+System must provide Pareto charts by:
+• Line
+• SKU
+• Package type
+• Component
+• Shift
+• Operator
+
+FR-OFF-04
+
+System must compute historical tolerance windows and Gold Standard overfill ranges per line.
+
+FR-OFF-05
+
+Predictive model must estimate overfill risk using:
+Line speed 
+Temperature – of the mass
+Package complexity and specifications
+Operator history – (Data may not be readily available)
+Scrap variance
+Component variability Process capability (Cp/Cpk) 
+FR-OFF-06
+
+Provide prescriptive recommendations:
+Reduce line speed by X%
+Adjust fill valves
+Change shift allocation
+Modify setup parameters
+Run on different resources
+
+7. MODULE 2 – Predictive NPL Performance Requirements
+
+
+7.1 Purpose
+Develop a predictive simulation engine that estimates manufacturing performance of a new SKU before first production.
+The system must:
+Use historical SKU performance data
+Compare similarity across packaging, formulation, and operational complexity
+Estimate performance under specific line conditions
+Provide explainable predictions
+Recommend the most suitable line(s)
+This module directly supports Gold Standard alignment and reduces vertical startup inefficiencies.
+Phase 2 Scope Boundaries
+In Scope
+Supervised ML regression models for performance prediction
+Similarity-based SKU clustering
+Deterministic line recommendation logic
+Explainable AI (feature attribution required)
+Advisory recommendations only
+Out of Scope (Future Phase)
+Real-time adaptive learning during launch
+Autonomous Pack Assist parameter overrides
+Closed-loop production control
+Cross-plant network optimization
+
+7.2 Inputs Required
+
+• Packaging attributes (PDS)
+• BOM & routing complexity
+• Historical fill & assembly performance
+• Scrap patterns (material, component, line)
+• Changeover time history
+• Speed benchmarks (GS)
+• Viscosity, SG, density attributes
+• MnR -Pack Assist change-parts mapping
+
+7.3 Functional Requirements (FR-NPL)
+
+FR-NPL-01
+
+System must model similarity of a new SKU based on at least:
+Package dimensions
+Component weights
+Material viscosity class
+Fill weight
+Assembly complexity
+Changeover matrix
+Historical changeover complexity
+
+FR-NPL-02
+
+System must produce predicted values for:
+OEE
+Scrap %
+Line speed (F&A)
+Overfill risk 
+Crew Size
+Changeover time
+
+FR-NPL-03
+
+System must recommend the best line based on:
+Historical capability
+GS benchmark fit 
+Po Size
+Labor constraints
+Predicted performance vs GS benchmark
+Pack Assist compatibility
+Output must include:
+Ranked line options
+Financial impact comparison
+Risk classification (Low / Medium / High)
+
+
+FR-NPL-04– Explainability & Transparency
+
+For every prediction, system must provide:
+Feature importance ranking
+Top 3 performance drivers
+Confidence interval for prediction
+Similar historical SKUs used in comparison
+Black-box models without explainability are not permitted.
+FR-NPL-05 – Integration with Pack Assist
+System must:
+Send predicted performance metrics to Pack Assist
+Provide recommended setup standards
+Flag packaging risks affecting efficiency
+Maintain version traceability
+All updates are advisory and require human validation.
+Acceptance Criteria
+AC-NPL-01
+ Model must exceed defined performance thresholds during back-testing.
+AC-NPL-02
+ System must correctly rank top-performing line within top 2 positions in ≥ 80% of historical validation cases.
+AC-NPL-03
+ Prediction results must reconcile within ±10% of actual launch performance after 30-day stabilization period.
+AC-NPL-04
+ Model explainability output must be visible in dashboard.
+Expected Business Outcomes
+20 - 30% improvement in NPL planning accuracy
+Reduced launch stabilization time
+Improved line allocation decisions
+Reduced startup scrap and overfill
+Stronger alignment with Gold Standard performance
+
+8. MODULE 3 – Sequencing Optimization Requirements
+8.1 Purpose
+
+Automate and optimize short-term scheduling for Fill & Assembly lines.
+8.2 Inputs Required
+
+• Changeover matrix (SKU → SKU)
+• Labor availability
+• Line capability (SAP + historical)
+• Component readiness
+• Inventory availability
+• OEE & GS speed
+• BOM & routing
+• Downtime windows
+
+Inputs Required
+The sequencing engine must consume the following structured inputs:
+Changeover Intelligence
+Historical Changeover Matrix (SKU → SKU)
+Avg changeover time
+Changeover type (minor / major / format / wash)
+Std deviation (optional Phase 2)
+Line Capability
+Historical OEE
+Gold Standard speed
+Historical throughput
+Asset capacity class
+Order & Production Data
+Planned SKU list for horizon
+Production quantities
+Routing requirements
+BOM dependencies
+Operational Constraints
+Labor availability (if available)
+Shift duration
+Downtime windows (planned)
+Material/component readiness
+Inventory availability
+Performance Benchmarks
+GS Speed
+GS Scrap
+GS OEE
+The optimization engine must:
+Generate feasible sequence permutations.
+Score each sequence based on defined objective function.
+Select sequence with highest total score.
+Objective Function (Phase 2)
+Maximize:
+Throughput – Changeover Loss – GS Deviation Penalty
+Where:
+Throughput = Expected units produced
+Changeover Loss = Sum of SKU-to-SKU transition time
+GS Deviation Penalty = Difference from GS benchmark performance
+Objective function weights must be configurable.
+8.3 Functional Requirements (FR-SEQ)
+
+FR-SEQ-01
+
+System must optimize sequence for a given production horizon (shift, day).
+
+FR-SEQ-02
+
+System must compute:
+Expected throughput
+Changeover losses
+Efficiency vs GS benchmarks
+Expected OEE
+% adherence to GS benchmarks
+
+FR-SEQ-03
+System must allow planners to:
+Lock specific SKUs in position
+Exclude certain SKUs
+Adjust priority weights
+Modify labor constraints
+Compare multiple scenarios
+Minimum: Option A vs Option B comparison.
+
+FR-SEQ-04
+
+System must present recommended sequence in:
+Dynamic Gantt chart
+Sequence position table
+Changeover heatmap (From → To transitions)
+
+
+FR-SEQ-05 - Quantified Benefit
+System must calculate:
+Throughput improvement vs historical baseline
+Changeover time reduction %
+Financial impact (cost savings)
+Asset utilization improvement
+All benefits must be displayed before execution.
+
+
+
+Data Model Requirements
+The following fact tables must support sequencing:
+FactChangeoverMatrix
+Grain:
+ Line × FromSKU × ToSKU
+Measures:
+AvgChangeoverTime
+ChangeoverType
+CleaningRequiredFlag
+FactSequenceScenario
+Grain:
+ Line × Shift × Scenario × SequencePosition
+Measures:
+ExpectedThroughput
+CumulativeChangeoverTime
+ScenarioScore
+Sequencing engine must operate only on Gold-layer standardized tables.
+
+Acceptance Criteria
+AC-SEQ-01
+ Optimization runtime ≤ 60 seconds for up to 25 SKUs per horizon.
+AC-SEQ-02
+ Simulated changeover time reduction ≥ 10% vs historical baseline.
+AC-SEQ-03
+ Simulated throughput improvement ≥ 5% vs historical baseline.
+AC-SEQ-04
+ Scenario scoring must be transparent and auditable.
+AC-SEQ-05
+ Recommended sequence must be reproducible given same inputs.
+9. Data Requirements
+
+***A full table listing all SAP, PDS, QA, LIMS, PackAssist, TML tables  will be mapped into:
+• Source
+• Table
+• Description
+• EDL availability
+• Priority
+• Usage in Phase 2
+***Will be shared as a separate document
+10. System Integration Requirements
+
+10.1 EDL / Databricks Pipelines
+
+All data ingested through scheduled refreshes; partial real-time ingestion for TML optional.
+
+10.2 SAP
+
+Access to tables AFKO, AFRU, MSEG, RESB, STPO, MKPF, etc.
+
+10.3 PDS
+
+Packaging attributes, component weights, drawings, tolerances.
+
+10.4 MnR Pack Assist
+
+Change parts & format compatibility matrices.
+
+10.5 QA / LIMS
+
+SG, density, viscosity, Test data
+11. Other Functional Requirements
+
+
+Performance: All dashboards < 5 sec load
+Data representative for 10 plants globally
+Data for the last 3 years
+Sequencing optimization runtime < 60 sec
+Data lineage approval
+Role-based governance 
+Data and Calculation accuracy
+Visualizations and predictions accurate 
+
+
+12. Acceptance Criteria
+
+Examples:
+
+AC-OFF-01
+
+Overfill variance must match SAP usage variance within ±0.5%.
+
+AC-NPL-05
+
+Model accuracy for NPL predictions must exceed 80% based on back-testing.
+
+AC-SEQ-03
+
+Sequencing engine must reduce estimated changeover time by at least 10%.
+
+13. Risks & Mitigations
+
+• Data quality inconsistencies → implement validation layer
+• Operator-driven variability → model using historical batch/shift patterns
+• Overfilling complexity → SG normalization required
+14. Expected Business Outcomes
+
+Overfill Optimization
+• 15–25% reduction in giveaway cost
+• Standardized tolerance windows across lines
+
+NPL Prediction
+• 20–30% improvement in NPL planning accuracy
+• Faster stabilization of production post-launch. 
+
+Sequencing Optimization
+• 5–12% throughput improvement
+• 10–20% reduction in changeover losses
+Gap Cover Intelligent Insights
+• 5–15% improvement in OEE and labor efficiency by closing performance gaps between legacy SKUs and Gold Standard benchmarks
+• Quantified, actionable gap insights translating directly into prioritized cost-saving and performance improvement opportunities across lines, shifts, and SKU
+
+
+***************Potential Mockups*****************
+Gap Cover Intelligent Insights
+--------------------------------------------------
+| Gap Cover Intelligent Insights | 
+--------------------------------------------------
+| Filters: Plant | Line | SKU | Shift | Period | 
+--------------------------------------------------
+| KPI Tiles: | 
+ | Total Gap Cost | OEE Gap | Scrap Gap | Labor Gap | 
+--------------------------------------------------
+| Portfolio Segmentation (Quadrant View) | 
+--------------------------------------------------
+ | High Volume / High Gap | 
+--------------------------------------------------
+ | Low Volume / High Gap | 
+--------------------------------------------------
+| Ranked Opportunity List (Top 20 SKUs) | 
+--------------------------------------------------
+| Financial Impact Breakdown | 
+--------------------------------------------------
+| Recommended Actions Panel | 
+--------------------------------------------------
+
+Integrate with existing Dashboard Phase1
+
+Overfill Dashboard Mockup
+---------------------------------------------------------
+| Overfill Optimization Dashboard                         |
+---------------------------------------------------------
+| Filters: Plant | Line | SKU | Package | Shift | Date   |
+---------------------------------------------------------
+| KPI Tiles:                                          |
+|  Overfill % | Giveaway Cost | SG Adjusted | CpK       |
+---------------------------------------------------------
+|   Trend Chart: Overfill % Over Time                  |
+---------------------------------------------------------
+|   Pareto: Overfill Drivers by Package Type           |
+---------------------------------------------------------
+|   SG vs Overfill Scatter Plot                        |
+---------------------------------------------------------
+|   Table: SKU × Line × Shift Overfill Details         |
+---------------------------------------------------------
+ 
+NPL Prediction Dashboard Mockup
+---------------------------------------------------------
+| NPL Predictive Performance Dashboard                   |
+---------------------------------------------------------
+| Filters: Launch SKU | Similar SKUs | Packaging Class   |
+---------------------------------------------------------
+| KPI Tiles: Predicted OEE | Scrap % | Speed | Overfill   |
+---------------------------------------------------------
+| Spider Chart: Predicted vs Historical SKU Clusters     |
+---------------------------------------------------------
+| Table: Similarity Score Ranking                        |
+---------------------------------------------------------
+| Variance Chart: Expected vs Actual After Launch        |
+---------------------------------------------------------
+
+Sequencing Dashboard Mockup
+---------------------------------------------------------
+| Sequencing Optimization (Dynamic Schedule)             |
+---------------------------------------------------------
+| Filters: Line | Shift | Horizon | Constraints          |
+---------------------------------------------------------
+| Gantt Chart: Recommended Optimal Sequence              |
+---------------------------------------------------------
+| KPI Tiles: Throughput Gain | CO Time Saved | GS Match  |
+---------------------------------------------------------
+| Changeover Matrix (Heatmap)                            |
+---------------------------------------------------------
+| Scenario Comparison (Option A vs B)                    |
+---------------------------------------------------------
+
+Some Noteworthy Flow Diagrams
+Data Flow Diagram
+ 
+SAP ----\}
+PDS -----\  }
+QA/LIMS ---\  }
+MnR PackAssist ---\ }    --->  EDL ---> Databricks ---> ML Models ---> Dashboards
+TML/OT ------/}
+ 
+Sequencing Engine Workflow
+ 
+Input:
+  SKU List --> Line Capability --> CO Matrix --> Material Readiness --> Constraints
+
+Processing:
+  Optimization Algorithm (OR/ML)
+  Evaluate thousands of sequence permutations
+  Score based on:
+      - Changeover time
+      - Throughput
+      - GS adherence
+      - Resource availability
+
+Output:
+  Optimal Sequence
+  Scenario Alternatives
+  Gantt Visualization
+
+ NPL Prediction Workflow
+ 
+New SKU Attributes 
+     |
+     v
+Similarity Engine --> Historical Performance Database
+     |
+     v
+Predictive Model (Speed, Scrap, OEE, Overfill)
+     |
+     v
+NPL Readiness Dashboard + PDS PackAssist Feedback
+ 
+ARCHITECTURE - Theoretical
+
+
+1. High-Level Architecture (Logical)
+
+Think of Phase 2 as four layers:
+
+1. Source Systems
+SAP (orders, confirmations, material movements, BOM, costing)
+PDS (packaging attributes, dimensions, weights)
+QA / LIMS (SG, viscosity, QC attributes)
+TML / OT / MES (cycle times, micro-stops, downtimes, speed)
+Pack Assist (change parts, line–format compatibility, NPL setup)
+Existing GS outputs (Phase 1 benchmarks)
+
+2. Data & Integration Layer
+EDL / ADLS Gen2 landing zone
+Ingestion pipelines (batch, possibly some near real-time for TML)
+Schema validation & standardization
+
+3. Processing & Analytics Layer (Databricks)
+
+• Medallion architecture: Bronze (raw) → Silver (cleaned) → Gold (business model)
+• Feature engineering for:
+• Overfill optimization
+• NPL prediction
+• Sequencing optimization
+• ML / OR models:
+• Overfill risk model
+• NPL performance model
+• Sequencing optimization engine
+
+4. Consumption / Experience Layer
+• Power BI / Pulse dashboards (Overfill, NPL, Sequencing, GS)
+• APIs / views to PackAssist & Pulse UI
+• ELLA / semantic layer for natural-language queries (optional but in your doc set)
+
+
+2. Source → Staging Design (Granular)
+2.1 SAP – Core Tables (Production & Variance)
+
+Main objects:
+• AFKO – Order header (production orders)
+• AFVC – Operations (routing steps inside the order)
+• AFRU – Confirmations (actuals: qty, time)
+• MSEG / MKPF – Material movements (actual consumption, scrap)
+• RESB – Reservations (planned component usage)
+• STPO / STKO – BOM header and items
+• CRHD – Work centers (lines, machines)
+• MBEW / KEKO – Costing (standard cost, variances)
+
+Staging grain (Silver layer):
+• stg_production_order (from AFKO)
+• Key: AUFNR (Order), WERKS (Plant)
+• stg_production_operation (from AFVC)
+• Key: AUFNR, APLZL (internal operation counter)
+• stg_production_confirmation (from AFRU)
+• Key: AUFNR, RUECK (confirmation), RMZHL (counter)
+• stg_material_movement (from MSEG + MKPF)
+• Key: MBLNR, ZEILE (doc+item)
+• stg_reservation (from RESB)
+• stg_bom_item (from STPO)
+• stg_workcenter (from CRHD)
+• stg_costing (from MBEW/KEKO)
+
+Everything at this layer is 1:1 with SAP tables, plus basic harmonization (data types, date formats).
+
+
+2.2 PDS – Packaging & Format Data
+
+Concept:
+• Gives you package geometry and component weights, key for NPL + Overfill + Sequencing.
+
+Staging:
+• stg_pds_package
+• PACKAGE_ID
+• MATNR (SKU material)
+• HEIGHT, WIDTH, DEPTH, DIAMETER, VOLUME
+• MATERIAL_TYPE (plastic, glass, tube, jar)
+• EMPTY_WEIGHT, LABEL_WEIGHT, CLOSURE_WEIGHT
+• TOLERANCE_CLASS (if defined)
+
+
+2.3 QA / LIMS – SG & Viscosity
+
+Staging tables:
+• stg_lims_sg
+• MATERIAL_ID, BATCH_ID, SG_VALUE, MEASURE_DATE, TEMP
+• stg_lims_rheology
+• MATERIAL_ID, BATCH_ID, VISCOSITY_CLASS, VISCOSITY_VALUE
+
+These feed SG-adjusted overfill and segmentation of products into viscosity classes (impacts line behavior).
+
+
+2.4 TML / OT – Time Loss & Speed
+
+Staging tables:
+• stg_tml_cycle_time
+• PLANT, LINE_ID, SKU_ID, DATE, SHIFT, AVG_CYCLETIME
+• stg_tml_events
+• PLANT, LINE_ID, EVENT_TYPE (downtime, microstop), START_TS, END_TS
+
+These feed:
+• Line speed features
+• Downtime patterns
+• Sequencing constraints (downtime windows)
+
+
+2.5 PackAssist – Change Parts & Line Compatibility
+
+Staging tables:
+• stg_packassist_change_parts
+• LINE_ID, FORMAT_ID, CHANGE_PART_SET, SETUP_TIME_STD
+• stg_packassist_compatibility
+• LINE_ID, SKU_ID, IS_COMPATIBLE, NOTES
+• stg_packassist_npl_setup
+• NPL_ID, REQUIRED_PARTS, PREFERRED_LINES
+
+These are critical for NPL feasible line selection and sequencing changeover matrix.
+
+3. Canonical Data Model (Gold Layer)
+
+Now the part vendors must really understand: your canonical model.
+
+3.1 Dimensions
+
+DimPlant
+• PlantKey (surrogate)
+• PlantCode (WERKS)
+• PlantName
+• Region, Country
+
+DimLine
+• LineKey
+• LineCode (from CRHD / TML)
+• PlantKey
+• LineType (Fill & Assembly, Packaging)
+• CapacityClass (High-speed, Medium, etc.)
+
+DimProductSKU
+• ProductKey
+• MaterialID (MATNR)
+• Brand
+• Category
+• Subcategory
+• NPLFlag
+• Link to GS anchor (from Phase 1)
+
+DimPackage
+• PackageKey
+• MaterialID (container material)
+• FormatType (bottle, jar, tube, pump)
+• Volume_Nominal
+• EmptyWeight
+• TotalPackageWeight
+• ToleranceClass
+
+DimBatch
+• BatchKey
+• MaterialID
+• BatchID
+• ManufactureDate
+
+DimTime
+• DateKey (YYYYMMDD)
+• Date, Month, Year, Week, Quarter
+• Shift-level: ShiftCode, ShiftStart, ShiftEnd (or separate DimShift)
+
+DimOperator (optional, where data exists)
+• OperatorKey
+• OperatorID
+• SkillLevel, Role
+
+DimNPL
+• NPLKey
+• NPLCode
+• ProjectName
+• TargetLaunchDate
+• TargetLine
+
+
+3.2 Fact Tables
+
+3.2.1 FactProductionExecution
+
+Grain:
+One row per Order × Operation × Date × Line × SKU (optionally batch).
+
+Keys:
+• PlantKey
+• LineKey
+• ProductKey
+• BatchKey (if available)
+• TimeKey
+• OrderID (AUFNR)
+• OperationID (APLZL or work center routing step)
+
+Measures:
+• PlannedQty
+• ConfirmedQty
+• ScrapQty
+• ProducedQty
+• ConfirmedMachineTime
+• ConfirmedLaborTime
+• OEE (calculated)
+• Speed_Actual
+• Speed_GS_Target (joined from GS table)
+
+This is the core fact your GS + NPL + Sequencing will rely on.
+
+
+3.2.2 FactMaterialConsumption
+
+Grain:
+One row per Order × Component Material × Batch (derived from MSEG + RESB + STPO).
+
+Keys:
+• PlantKey
+• OrderID
+• ProductKey (header)
+• ComponentMaterialKey
+• BatchKey
+• TimeKey
+
+Measures:
+• PlannedQty_Component
+• ActualQty_Component
+• VarianceQty
+• VarianceCost (ActualQty – PlannedQty) × StandardCost
+
+This is the source for overfill & scrap variance.
+
+
+3.2.3 FactOverfill (Derived Mart)
+
+This is not a raw table from SAP; it’s a Phase 2 computed mart.
+
+Grain (recommended):
+One row per SKU × Line × Shift × Day or even per SKU × Line × Batch where data supports.
+
+Keys:
+• PlantKey
+• LineKey
+• ProductKey
+• PackageKey
+• BatchKey (optional)
+• TimeKey
+
+Measures (VERY IMPORTANT):
+• NominalVolume
+• RegulatoryMinFill
+• TargetFillWeight = NominalVolume × SG (from LIMS)
+• AverageActualFillWeight (from material consumption / in-line measurements if available)
+• OverfillWeight = AverageActualFillWeight – TargetFillWeight
+• OverfillPercent = OverfillWeight / TargetFillWeight
+• OverfillCost = OverfillWeight × MaterialUnitCost
+• OverfillStdDev (σ)
+• Cp, CpK per SKU/line
+
+
+Stat fields:
+• UpperControlLimit, LowerControlLimit
+• OverfillFlag (above UCL yes/no)
+
+This is what powers:
+• Overfill dashboard
+• Predictive features
+• Overfill ranking & watchlists
+
+
+3.2.4 FactScrap
+Grain:
+One row per Order × SKU × ScrapReason × Day.
+
+Keys:
+• PlantKey
+• LineKey
+• ProductKey
+• TimeKey
+• ScrapReasonKey (from SAP QA or custom codes)
+
+Measures:
+• ScrapQty
+• ScrapCost (ScrapQty × StandardCost)
+• ScrapRate (ScrapQty / ProducedQty)
+
+Useful for:
+• NPL risk features
+• Overfill vs scrap interplay
+• Sequencing risk profile
+
+
+3.2.5 FactChangeoverMatrix
+
+Grain:
+One row per Line × FromSKU × ToSKU (optionally plant-level).
+
+Keys:
+• PlantKey
+• LineKey
+• FromProductKey
+• ToProductKey
+
+Measures:
+• AvgChangeoverTime
+• StdDevChangeoverTime
+• ChangeoverType (format change, minor change, full wash)
+• CleaningRequiredFlag
+
+Source: derived from historical order sequences + downtime/TML events + PackAssist.
+
+This is the backbone of sequencing optimization.
+
+
+3.2.6 Fact NPLPrediction
+
+Grain:
+One row per NPL × Line × Scenario.
+
+Keys:
+• NPLKey
+• LineKey
+• ScenarioID
+
+Measures:
+• PredictedOEE
+• PredictedSpeed
+• PredictedScrapRate
+• PredictedOverfillRisk
+• LaunchReadinessScore
+• RiskCategory (Low/Medium/High)
+
+This fact is fed by the NPL ML model and displayed in NPL dashboards and PackAssist.
+
+3.2.7 FactSequenceScenario
+
+Grain:
+One row per Line × Shift × Scenario × SequencePosition.
+
+Keys:
+• PlantKey
+• LineKey
+• TimeKey (date)
+• ShiftKey
+• ScenarioID
+• SequencePosition (1, 2, 3…)
+
+Attributes:
+• ProductKey (SKU at that position)
+• OrderID or AggregatedOrderGroupID
+
+Measures:
+• ExpectedThroughput
+• ExpectedChangeoverTimeFromPrevious
+• CumulativeChangeoverTime
+• ExpectedOEE
+• ScenarioScore (global objective function)
+
+This underpins the Gantt UI and scenario comparison in sequencing.
+
+
+4. Feature Tables for ML / Optimization
+
+To talk to data science / vendor ML teams, give them this mental model:
+
+4.1 Overfill Feature Table: feat_overfill
+
+Grain:
+SKU × Line × Batch or SKU × Line × Shift × Day.
+
+Columns (examples):
+• Keys: PlantKey, LineKey, ProductKey, BatchKey, TimeKey
+• Features:
+• SG_Value
+• ViscosityClass
+• Speed_Planned, Speed_Actual
+• OEE
+• ScrapRate
+• AvgFillWeight
+• ContainerVolume
+• EmptyContainerWeight
+• OperatorID (if available)
+• AmbientTemp (if available from OT)
+• Label:
+• OverfillFlag (1 if above tolerance band)
+• Or continuous OverfillPercent
+
+
+4.2 NPL Feature Table: feat_npl
+
+Grain:
+Historical SKUs used to train the model.
+
+Columns:
+• Packaging features (dimensions, material, format)
+• GS performance features (GS_OEE, GS_Speed, GS_Scrap)
+• Complexity indicators (No. of components, label complexity, decoration)
+• Changeover complexity (avg changeover time when switching to/from this SKU)
+• Outcome labels:
+• Actual OEE
+• ActualScrapRate
+• StabilizationTimeAfterLaunch
+
+For each new NPL, the same feature set is derived using planned packaging data, and the model predicts performance.
+
+
+4.3 Sequencing Feature Table: feat_sequence
+
+Grain:
+Pairs of SKU sequences and historical performance.
+
+Columns:
+• LineKey
+• FromProductKey, ToProductKey
+• ChangeoverTime
+• ChangeoverType
+• CO_Cost
+• ThroughputAfterChangeover
+• DowntimeFlag (if cleaning required)
+• GS_Delta (distance from GS after changeover)
+
+This set feeds the OR engine and can also be used to learn good/bad changeover patterns.
+
+Appendix
+Acronym Definitions
+Acronym
+Definition
+PULSE 
+ Manufacturing analytics and decision-intelligence platform
+GS 
+Gold Standard (benchmark SKU performance reference)
+BRD 
+Business Requirements Document
+EDL 
+Enterprise Data Lake
+ADLS 
+Azure Data Lake Storage
+OEE
+Overall Equipment Effectiveness
+UPM
+Units Per Minute
+PO
+Production Order
+BOM
+Bill of Materials
+ROUTING
+Defined sequence of manufacturing operations
+CO
+Changeover
+F&A
+Fill & Assembly
+MES
+Manufacturing Execution System
+PLC
+Programmable Logic Controller
+SG 
+Specific Gravity (density relative to water)
+LSL 
+Lower Specification Limit
+USL 
+Upper Specification Limit
+Cp 
+ Process Capability Index
+Cpk 
+ Process Capability Performance Index
+UCL 
+Upper Control Limit
+LCL 
+ Lower Control Limit
+σ (Sigma) 
+Standard Deviation
+μ (Mu) 
+Process Mean
+Gap Cost
+Financial impact of deviation from Gold Standard
+Scrap %
+Percentage of defective or wasted units
+Giveaway
+Excess material filled beyond target
+Throughput
+Units produced per time period
+Labor Efficiency
+Actual labor vs standard labor utilization
+NPL
+New Product Launch
+Similarity Engine
+Model comparing new SKU attributes to historical SKUs
+Launch Stabilization
+Period required for SKU to reach stable performance
+Crew Size
+Number of operators assigned to line
+SAP
+Enterprise Resource Planning system
+AFKO
+SAP Production Order Header Table
+AFRU
+SAP Production Order Confirmation Table
+AFVC
+SAP Routing Operations Table
+MSEG
+SAP Material Document Segment Table
+MKPF
+SAP Material Document Header Table
+RESB
+SAP Reservation Table
+STPO
+SAP BOM Item Table
+STKO
+SAP BOM Header Table
+CRHD
+SAP Work Center Master Table
+MBEW
+SAP Material Valuation Table
+KEKO
+SAP Costing Header Table
+QA
+Quality Assurance
+LIMS
+Laboratory Information Management System
+Viscosity Class
+Categorization of formulation thickness
+Batch
+Production lot of material
+PDS
+Packaging Data Specification
+Pack Assist
+Change part & Component compatibility Application
+Format
+Packaging configuration
+Change Parts
+Mechanical components required for SKU setup
+ML
+Machine Learning
+OR
+Operations Research
+Drift
+Degradation in model performance due to changing data
+Feature Engineering
+Process of preparing model input variables
+ROC-AUC
+Receiver Operating Characteristic – Area Under Curve
+MAPE
+Mean Absolute Percentage Error
+Sequence Scenario
+Simulated production order arrangement
+Objective Function
+Mathematical scoring function for optimization
+Constraint
+Limitation applied in sequencing (labor, material, time)
+Deterministic Model
+Model producing consistent output for given inputs
+Cycle Speed
+Machine-level operating rate
+Line Speed
+Real production throughput including losses
+Gold Standard SKU
+Top-performing SKU used as benchmark
+Overfill Risk
+Probability of exceeding target fill weight
+
+

@@ -1,0 +1,8 @@
+{
+  "name": "Remix Kimberly-Clark PPDS - Personal Care \u0026 Healthcare Scheduling",
+  "description": "Enterprise Production Planning \u0026 Detailed Scheduling (PPDS) platform for The Estée Lauder Companies prestige beauty, luxury cosmetics \u0026 skincare manufacturing (Pure Color Envy, Crystal Balm, Advanced Night Repair, Revitalizing Supreme+) with multi-scenario comparison and constraint governance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

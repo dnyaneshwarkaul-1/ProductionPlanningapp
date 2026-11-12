@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+:root {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --el-navy: #001E38;
+  --el-navy-dark: #001224;
+  --el-blue: #002B54;
+  --el-gold: #C5A059;
+  --el-gold-light: #D4AF37;
+  --el-red: #BE123C;
+  --kc-navy: #001E38;
+  --kc-navy-dark: #001224;
+  --kc-blue: #002B54;
+  --kc-cyan: #C5A059;
+  --kc-red: #BE123C;
+  --kc-slate-bg: #F8FAFC;
+}
+
+body {
+  background-color: #F8FAFC;
+  color: #0F172A;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar for tables, Gantt, and sidebars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Hatch pattern for changeover blocks on Gantt chart */
+.bg-hatch-pattern {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(220, 38, 38, 0.15),
+    rgba(220, 38, 38, 0.15) 6px,
+    rgba(220, 38, 38, 0.3) 6px,
+    rgba(220, 38, 38, 0.3) 12px
+  );
+}
+
+.bg-sanitation-pattern {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(2, 132, 199, 0.15),
+    rgba(2, 132, 199, 0.15) 6px,
+    rgba(2, 132, 199, 0.3) 6px,
+    rgba(2, 132, 199, 0.3) 12px
+  );
+}
